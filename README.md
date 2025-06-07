@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Sistema de Cadastro de Erros de Notas Fiscais
 
 Este é um sistema React simples para cadastro de erros de notas fiscais, funcionando 100% no navegador (sem backend), usando localStorage.
@@ -27,3 +28,6 @@ O sistema estará disponível em [http://localhost:5173](http://localhost:5173)
 ---
 
 Projeto gerado com [Vite](https://vitejs.dev/) + React.
+=======
+# Blog-de-erros-notas
+>>>>>>> 15c5c1ccf4c2bc22907d3bcbc906fbfd2495d757
