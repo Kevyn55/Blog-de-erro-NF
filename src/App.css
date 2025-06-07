@@ -1,0 +1,612 @@
+body, html, #root {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #f8fafc;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #222;
+  background: #f8fafc;
+}
+
+header {
+  background: #2563eb;
+  color: #fff;
+  padding: 1.1rem 0 1.1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px #0001;
+  justify-content: space-between;
+  border-bottom: none;
+}
+.header-title {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #fff;
+}
+nav {
+  display: flex;
+  gap: 1rem;
+  margin-right: 2rem;
+}
+nav a {
+  color: #fff;
+  background: transparent;
+  text-decoration: none;
+  padding: 0.4em 1.2em;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+nav a.active, nav a:hover {
+  background: #1746a2;
+  color: #fff;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 0 0 0;
+  text-align: center;
+  background: transparent;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 0 1rem;
+  background: transparent;
+}
+.titulo-lista {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: #2563eb;
+  letter-spacing: -1px;
+}
+.alerta {
+  background: #fff9c4;
+  border-left: 5px solid #facc15;
+  color: #b45309;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  box-shadow: none;
+}
+.alerta strong {
+  color: #b45309;
+  font-weight: bold;
+}
+.btn-novo-erro {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 0.7em 2em;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 0;
+  margin-bottom: 0;
+  float: none;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  justify-content: center;
+  box-shadow: none;
+}
+.btn-novo-erro:hover {
+  background: #15803d;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 300px;
+  padding-bottom: 1.5rem;
+  background: transparent;
+  gap: 2rem;
+}
+.card-erro {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0002;
+  padding: 1.2rem 1.2rem 1rem 1.2rem;
+  min-width: 360px;
+  max-width: 360px;
+  flex: 0 0 360px;
+  height: 260px;
+  box-sizing: border-box;
+  margin-bottom: 1.2rem;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  border: none;
+  transition: box-shadow 0.2s, border 0.2s;
+  position: relative;
+  padding-bottom: 4.2em;
+}
+.card-erro:hover {
+  box-shadow: 0 4px 20px #2563eb22;
+  border: none;
+}
+.card-erro .codigo {
+  background: #fee2e2;
+  color: #b91c1c;
+  font-weight: bold;
+  border-radius: 8px;
+  font-size: 0.92em;
+  padding: 0.12em 0.7em;
+  display: inline-block;
+  margin-bottom: 0.3em;
+}
+.card-erro .data {
+  float: right;
+  color: #94a3b8;
+  font-size: 0.95em;
+  margin-top: 0.1em;
+}
+.card-erro h3 {
+  margin: 0.1em 0 0.3em 0;
+  font-size: 1.15em;
+  color: #222;
+  font-weight: 600;
+}
+.card-erro p {
+  margin: 0.1em 0 0.4em 0;
+  color: #444;
+  font-size: 1em;
+}
+.card-erro-botoes {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  padding: 0 1.2rem 1rem 1.2rem;
+  background: transparent;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+}
+.card-erro .btn-detalhes,
+.card-erro .btn-excluir,
+.card-erro .btn-editar {
+  width: 31.5%;
+  min-width: 0;
+  margin-top: 0;
+  flex: 1 1 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  box-shadow: none;
+  text-align: center;
+}
+.card-erro .btn-detalhes:hover {
+  background: #1746a2;
+}
+.card-erro .btn-excluir,
+.btn-excluir {
+  background: #f1f5f9;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 0.5em 0;
+  border-radius: 7px;
+  font-size: 0.98em;
+  font-weight: 500;
+  cursor: pointer;
+  width: 32%;
+  min-width: 0;
+  margin-top: 0;
+  flex: 1 1 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: none;
+}
+.card-erro .btn-excluir:hover,
+.btn-excluir:hover {
+  background: #ef4444;
+  color: #fff;
+}
+.card-erro .btn-editar {
+  background: #fbbf24;
+  color: #fff;
+  border: none;
+  padding: 0.6em 0;
+  border-radius: 8px;
+  font-size: 1.05em;
+  font-weight: 500;
+  cursor: pointer;
+  width: 32%;
+  min-width: 0;
+  margin-top: 0;
+  flex: 1 1 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  box-shadow: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.card-erro .btn-editar:hover {
+  background: #b45309;
+}
+.card-erro .btn-editar svg {
+  width: 1.1em;
+  height: 1.1em;
+  margin-right: 0.3em;
+  fill: currentColor;
+}
+
+.menu-erro-topo {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: #fff;
+  padding: 0.7rem 1.2rem 0.7rem 1.2rem;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px #0001;
+  margin-bottom: 1.2rem;
+  gap: 1.2rem;
+}
+.menu-listas {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.menu-listas label {
+  font-weight: 500;
+  color: #222;
+  font-size: 0.98em;
+}
+.menu-listas select {
+  padding: 0.3em 0.7em;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  background: #fff;
+  font-size: 0.98em;
+  color: #000 !important;
+  font-weight: 600;
+}
+.menu-listas select:focus {
+  outline: 2px solid #2563eb;
+  color: #000 !important;
+}
+.menu-pesquisa {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-left: 1em;
+}
+.menu-pesquisa input[type="text"] {
+  padding: 0.3em 0.7em;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  font-size: 0.98em;
+  background: #fff;
+  width: 170px;
+  color: #000;
+}
+.btn-pesquisar {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 0.3em 0.8em;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-pesquisar:hover {
+  background: #1746a2;
+}
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  margin: 1.5rem 0 2rem 0;
+}
+.paginacao button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.paginacao button:disabled {
+  background: #bcd0f7;
+  color: #fff;
+  cursor: not-allowed;
+}
+.paginacao .pagina-atual {
+  font-weight: bold;
+  color: #2563eb;
+  font-size: 1.1em;
+  margin: 0 0.5em;
+}
+@media (max-width: 900px) {
+  .container, .cards {
+    width: 100vw;
+    max-width: none;
+    padding: 0 0.5rem;
+  }
+  .cards {
+    align-items: stretch;
+  }
+  .card-erro {
+    min-width: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
+    height: auto;
+    padding: 0.6rem 0.3rem 0.4rem 0.3rem;
+    font-size: 0.92em;
+  }
+  .card-erro-botoes {
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 0 0.5rem 0.7rem 0.5rem;
+    align-items: stretch;
+  }
+  .card-erro .btn-detalhes,
+  .card-erro .btn-excluir,
+  .card-erro .btn-editar {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+  }
+}
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.7rem 0.5rem;
+  }
+  .header-title {
+    font-size: 1.1rem;
+    gap: 0.4rem;
+  }
+  nav {
+    margin-right: 0;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .container, .cards {
+    width: 100vw;
+    max-width: none;
+    padding: 0 0.2rem;
+  }
+  .formulario {
+    padding: 1rem;
+  }
+  .titulo-lista {
+    font-size: 1.3rem;
+  }
+  .menu-erro-topo {
+    padding: 0.5rem 0.2rem;
+  }
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: #fff;
+  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px #0002;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+}
+.formulario input[type="text"],
+.formulario textarea {
+  padding: 0.7em;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  color: #222;
+  resize: vertical;
+  font-size: 1em;
+  font-family: inherit;
+  box-shadow: none;
+}
+.formulario input[type="text"]:focus,
+.formulario textarea:focus {
+  outline: 2px solid #2563eb;
+  border-color: #2563eb;
+}
+.formulario input[name="codigo"] {
+  background: #f8fafc;
+  color: #222;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 1em;
+  font-family: inherit;
+  padding: 0.7em;
+  box-shadow: none;
+  margin-bottom: 0.2em;
+}
+.formulario input[name="codigo"]:focus {
+  outline: 2px solid #2563eb;
+  border-color: #2563eb;
+}
+.formulario input[type="file"] {
+  background: #f8fafc;
+  color: #222;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 1em;
+  font-family: inherit;
+  padding: 0.5em 0.7em;
+  margin-top: 0.5em;
+  box-shadow: none;
+}
+.formulario label {
+  color: #2563eb;
+  font-weight: 500;
+  margin-bottom: 0.2em;
+}
+.formulario label[for="codigo"],
+.formulario label[for="imagemErro"],
+.formulario label[for="imagemSolucao"] {
+  color: #2563eb;
+  font-weight: 500;
+  margin-bottom: 0.2em;
+  display: block;
+}
+.formulario button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 0.8em;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: 500;
+  margin-top: 0.5em;
+}
+.formulario button:hover {
+  background: #1746a2;
+}
+.formulario .botoes-form {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  margin-top: 1.2em;
+}
+.card-erro img {
+  max-width: 100%;
+  max-height: 80px;
+  object-fit: contain;
+  display: block;
+  margin: 0.5em 0 0.2em 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px #0001;
+}
+
+.btn-img-popup {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 0.4em 1em;
+  border-radius: 6px;
+  font-size: 0.98em;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 0.3em;
+  margin-right: 0.5em;
+  transition: background 0.2s;
+  display: inline-block;
+}
+.btn-img-popup:hover {
+  background: #1746a2;
+}
+.popup-img-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup-img-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5em 1.5em 1em 1.5em;
+  box-shadow: 0 4px 32px #0005;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+.popup-img-content img {
+  max-width: 70vw;
+  max-height: 60vh;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 12px #0002;
+}
+.btn-fechar-popup {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5em 1.5em;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.5em;
+  transition: background 0.2s;
+}
+.btn-fechar-popup:hover {
+  background: #b91c1c;
+}
+.card-erro .botoes-card {
+  display: flex;
+  gap: 0.7em;
+  width: 100%;
+  margin-top: auto;
+  justify-content: space-between;
+}
+.card-erro .btn-detalhes,
+.card-erro .btn-excluir,
+.card-erro .btn-editar {
+  width: 31.5%;
+  min-width: 0;
+  margin-top: 0;
+  flex: 1 1 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
