@@ -1,57 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-const ERROS_PADRAO = [
-  {
-    codigo: '204',
-    descricao: 'Rejeição: Duplicidade de NF-e',
-    solucao: 'Verifique se a nota já foi transmitida anteriormente. Caso sim, utilize a chave de acesso já autorizada.',
-    imagemErro: '',
-    imagemSolucao: '',
-    data: '07/06/2025'
-  },
-  {
-    codigo: '539',
-    descricao: 'Rejeição: Duplicidade de NF-e, com diferença na Chave de Acesso',
-    solucao: 'Verifique se os dados da nota estão corretos. Se necessário, altere o número, série ou outros campos que compõem a chave.',
-    imagemErro: '',
-    imagemSolucao: '',
-    data: '07/06/2025'
-  },
-  {
-    codigo: '327',
-    descricao: 'Rejeição: CFOP de operação interna e idDest diferente de 1',
-    solucao: 'Ajuste o campo idDest para 1 (Operação interna) ou utilize um CFOP de operação interestadual/externa.',
-    imagemErro: '',
-    imagemSolucao: '',
-    data: '07/06/2025'
-  },
-  {
-    codigo: '215',
-    descricao: 'Rejeição: Falha no Schema XML',
-    solucao: 'Verifique se o XML está de acordo com o layout exigido pela SEFAZ. Corrija eventuais erros de estrutura.',
-    imagemErro: '',
-    imagemSolucao: '',
-    data: '07/06/2025'
-  },
-  {
-    codigo: '539',
-    descricao: 'Rejeição: Duplicidade de NF-e, com diferença na Chave de Acesso',
-    solucao: 'Verifique se os dados da nota estão corretos. Se necessário, altere o número, série ou outros campos que compõem a chave.',
-    imagemErro: '',
-    imagemSolucao: '',
-    data: '07/06/2025'
-  },
-  {
-    codigo: '232',
-    descricao: 'Rejeição: IE do destinatário não informada',
-    solucao: 'Informe a Inscrição Estadual do destinatário, caso ele seja contribuinte do ICMS.',
-    imagemErro: '',
-    imagemSolucao: '',
-    data: '07/06/2025'
-  }
-]
-
 function App() {
   const [erros, setErros] = useState([])
   const [form, setForm] = useState({
@@ -63,7 +12,6 @@ function App() {
   })
   const [showForm, setShowForm] = useState(false)
   const [alerta, setAlerta] = useState(null)
-  const [filtroCampo, setFiltroCampo] = useState('codigo')
   const [busca, setBusca] = useState('')
   const [paginaAtual, setPaginaAtual] = useState(1)
   const [detalheAberto, setDetalheAberto] = useState(null)
@@ -135,12 +83,6 @@ function App() {
 
   // Obter lista de códigos únicos para filtro
   const codigosUnicos = Array.from(new Set(erros.map(e => e.codigo.split(/\d/)[0]))).filter(Boolean)
-
-  // Limpa o campo de busca ao trocar o filtro
-  function handleFiltroCampoChange(e) {
-    setFiltroCampo(e.target.value)
-    setBusca('')
-  }
 
   return (
     <>
@@ -230,28 +172,6 @@ function App() {
                 )
               })}
             </div>
-            {popupImg && (
-              <div className="popup-img-bg" onClick={() => setPopupImg(null)}>
-                <div className="popup-img-content" onClick={e => e.stopPropagation()}>
-                  <img src={popupImg.src} alt={popupImg.alt} />
-                  <button className="btn-fechar-popup" onClick={() => setPopupImg(null)}>Fechar</button>
-                </div>
-              </div>
-            )}
-            {totalPaginas > 1 && (
-              <div className="paginacao">
-                <button onClick={() => setPaginaAtual(p => Math.max(1, p-1))} disabled={paginaAtual === 1}>Anterior</button>
-                {Array.from({length: totalPaginas}, (_,i) => (
-                  <button
-                    key={i+1}
-                    className={paginaAtual === i+1 ? 'pagina-atual' : ''}
-                    onClick={() => setPaginaAtual(i+1)}
-                    disabled={paginaAtual === i+1}
-                  >{i+1}</button>
-                ))}
-                <button onClick={() => setPaginaAtual(p => Math.min(totalPaginas, p+1))} disabled={paginaAtual === totalPaginas}>Próxima</button>
-              </div>
-            )}
           </>
         )}
         {showForm && (
