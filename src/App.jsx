@@ -1,6 +1,57 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+const ERROS_PADRAO = [
+  {
+    codigo: '204',
+    descricao: 'Rejeição: Duplicidade de NF-e',
+    solucao: 'Verifique se a nota já foi transmitida anteriormente. Caso sim, utilize a chave de acesso já autorizada.',
+    imagemErro: '',
+    imagemSolucao: '',
+    data: '07/06/2025'
+  },
+  {
+    codigo: '539',
+    descricao: 'Rejeição: Duplicidade de NF-e, com diferença na Chave de Acesso',
+    solucao: 'Verifique se os dados da nota estão corretos. Se necessário, altere o número, série ou outros campos que compõem a chave.',
+    imagemErro: '',
+    imagemSolucao: '',
+    data: '07/06/2025'
+  },
+  {
+    codigo: '327',
+    descricao: 'Rejeição: CFOP de operação interna e idDest diferente de 1',
+    solucao: 'Ajuste o campo idDest para 1 (Operação interna) ou utilize um CFOP de operação interestadual/externa.',
+    imagemErro: '',
+    imagemSolucao: '',
+    data: '07/06/2025'
+  },
+  {
+    codigo: '215',
+    descricao: 'Rejeição: Falha no Schema XML',
+    solucao: 'Verifique se o XML está de acordo com o layout exigido pela SEFAZ. Corrija eventuais erros de estrutura.',
+    imagemErro: '',
+    imagemSolucao: '',
+    data: '07/06/2025'
+  },
+  {
+    codigo: '539',
+    descricao: 'Rejeição: Duplicidade de NF-e, com diferença na Chave de Acesso',
+    solucao: 'Verifique se os dados da nota estão corretos. Se necessário, altere o número, série ou outros campos que compõem a chave.',
+    imagemErro: '',
+    imagemSolucao: '',
+    data: '07/06/2025'
+  },
+  {
+    codigo: '232',
+    descricao: 'Rejeição: IE do destinatário não informada',
+    solucao: 'Informe a Inscrição Estadual do destinatário, caso ele seja contribuinte do ICMS.',
+    imagemErro: '',
+    imagemSolucao: '',
+    data: '07/06/2025'
+  }
+]
+
 function App() {
   const [erros, setErros] = useState([])
   const [form, setForm] = useState({
@@ -12,10 +63,12 @@ function App() {
   })
   const [showForm, setShowForm] = useState(false)
   const [alerta, setAlerta] = useState(null)
+  const [filtroCampo, setFiltroCampo] = useState('codigo')
   const [busca, setBusca] = useState('')
   const [paginaAtual, setPaginaAtual] = useState(1)
   const [detalheAberto, setDetalheAberto] = useState(null)
   const [popupImg, setPopupImg] = useState(null)
+  const [editandoIdx, setEditandoIdx] = useState(null)
   const ITENS_POR_PAGINA = 6
 
   useEffect(() => {
@@ -36,6 +89,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('errosNotasFiscais', JSON.stringify(erros))
+    console.log('Salvando no localStorage:', erros)
   }, [erros])
 
   function handleChange(e) {
@@ -54,7 +108,12 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault()
     if (!form.codigo || !form.descricao || !form.solucao) return
-    setErros(arr => [{ ...form, data: new Date().toLocaleDateString('pt-BR') }, ...arr])
+    if (editandoIdx !== null) {
+      setErros(arr => arr.map((erro, idx) => idx === editandoIdx ? { ...form, data: new Date().toLocaleDateString('pt-BR') } : erro))
+      setEditandoIdx(null)
+    } else {
+      setErros(arr => [{ ...form, data: new Date().toLocaleDateString('pt-BR') }, ...arr])
+    }
     setForm({ codigo: '', descricao: '', solucao: '', imagemErro: '', imagemSolucao: '' })
     setShowForm(false)
   }
@@ -83,6 +142,12 @@ function App() {
 
   // Obter lista de códigos únicos para filtro
   const codigosUnicos = Array.from(new Set(erros.map(e => e.codigo.split(/\d/)[0]))).filter(Boolean)
+
+  // Limpa o campo de busca ao trocar o filtro
+  function handleFiltroCampoChange(e) {
+    setFiltroCampo(e.target.value)
+    setBusca('')
+  }
 
   return (
     <>
@@ -131,10 +196,31 @@ function App() {
             <div className="cards">
               {errosFiltrados.length === 0 && <p>Nenhum erro cadastrado.</p>}
               {errosPaginados.map((erro, idx) => {
-                const globalIdx = idx + (paginaAtual-1)*ITENS_POR_PAGINA;
+                // Corrigir: encontrar o índice real no array original
+                const globalIdx = erros.findIndex(e => e === erro);
                 const aberto = detalheAberto === globalIdx;
                 return (
                   <div className="card-erro" key={globalIdx}>
+                    <button
+                      className="btn-editar-superior"
+                      title="Editar"
+                      onClick={e => {
+                        e.stopPropagation();
+                        setForm({
+                          codigo: erro.codigo,
+                          descricao: erro.descricao,
+                          solucao: erro.solucao,
+                          imagemErro: erro.imagemErro,
+                          imagemSolucao: erro.imagemSolucao
+                        });
+                        setShowForm(true);
+                        setEditandoIdx(globalIdx);
+                      }}
+                    >
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.85 2.85a1.2 1.2 0 0 1 1.7 1.7l-1.1 1.1-1.7-1.7 1.1-1.1zm-2 2 1.7 1.7-8.2 8.2c-.13.13-.23.29-.27.47l-.5 2.1a.5.5 0 0 0 .6.6l2.1-.5c.18-.04.34-.14.47-.27l8.2-8.2-1.7-1.7-8.2 8.2c-.13.13-.23.29-.27.47l-.5 2.1a.5.5 0 0 0 .6.6l2.1-.5c.18-.04.34-.14.47-.27l8.2-8.2z" fill="#222" stroke="#222" strokeWidth="1.2"/>
+                      </svg>
+                    </button>
                     <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                       <span className="codigo">{erro.codigo}</span>
                       <span className="data">{erro.data || ''}</span>
@@ -146,20 +232,22 @@ function App() {
                         className="btn-img-popup"
                         type="button"
                         onClick={() => setPopupImg({src: erro.imagemErro, alt: 'Imagem do erro'})}
-                        style={{marginBottom: '0.3em'}}
-                      >Ver imagem do erro</button>
+                        style={{marginBottom: '0.3em'}}>
+                        Ver imagem do erro
+                      </button>
                     )}
                     {aberto && erro.imagemSolucao && (
                       <button
                         className="btn-img-popup"
                         type="button"
                         onClick={() => setPopupImg({src: erro.imagemSolucao, alt: 'Imagem da solução'})}
-                        style={{marginBottom: '0.3em'}}
-                      >Ver imagem da solução</button>
+                        style={{marginBottom: '0.3em'}}>
+                        Ver imagem da solução
+                      </button>
                     )}
-                    <div className="botoes-card">
-                      <button className="btn-detalhes" onClick={() => setDetalheAberto(aberto ? null : globalIdx)}>
-                        {aberto ? 'Ocultar Detalhes ↑' : 'Ver Detalhes →'}
+                    <div className="card-erro-botoes">
+                      <button className="btn-ajuda" onClick={() => setDetalheAberto(aberto ? null : globalIdx)}>
+                        {aberto ? 'Ocultar Detalhes ↑' : 'Ver mais detalhes →'}
                       </button>
                       <button className="btn-excluir" onClick={() => {
                         if(window.confirm('Tem certeza que deseja excluir este erro?')) {
@@ -172,6 +260,28 @@ function App() {
                 )
               })}
             </div>
+            {popupImg && (
+              <div className="popup-img-bg" onClick={() => setPopupImg(null)}>
+                <div className="popup-img-content" onClick={e => e.stopPropagation()}>
+                  <img src={popupImg.src} alt={popupImg.alt} />
+                  <button className="btn-fechar-popup" onClick={() => setPopupImg(null)}>Fechar</button>
+                </div>
+              </div>
+            )}
+            {totalPaginas > 1 && (
+              <div className="paginacao">
+                <button onClick={() => setPaginaAtual(p => Math.max(1, p-1))} disabled={paginaAtual === 1}>Anterior</button>
+                {Array.from({length: totalPaginas}, (_,i) => (
+                  <button
+                    key={i+1}
+                    className={paginaAtual === i+1 ? 'pagina-atual' : ''}
+                    onClick={() => setPaginaAtual(i+1)}
+                    disabled={paginaAtual === i+1}
+                  >{i+1}</button>
+                ))}
+                <button onClick={() => setPaginaAtual(p => Math.min(totalPaginas, p+1))} disabled={paginaAtual === totalPaginas}>Próxima</button>
+              </div>
+            )}
           </>
         )}
         {showForm && (
@@ -187,7 +297,7 @@ function App() {
             </label>
             <div style={{display:'flex',gap:'1em',justifyContent:'center'}}>
               <button type="submit">Salvar</button>
-              <button type="button" style={{background:'#888'}} onClick={() => setShowForm(false)}>Cancelar</button>
+              <button type="button" style={{background:'#888'}} onClick={() => { setShowForm(false); setEditandoIdx(null); setForm({ codigo: '', descricao: '', solucao: '', imagemErro: '', imagemSolucao: '' }) }}>Cancelar</button>
             </div>
           </form>
         )}
