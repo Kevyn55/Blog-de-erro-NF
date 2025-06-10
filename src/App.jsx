@@ -145,7 +145,7 @@ function App() {
   return (
     <>
       <header>
-        <span className="header-title"><span className="icon">📑</span> Blog de Erros NFe</span>
+        <span className="header-title"><span className="icon">📑</span> Blog de Erros NF</span>
         <nav>
           <a href="#" className={!showForm ? 'active' : ''} onClick={() => setShowForm(false)}>Home</a>
           <a href="#" className={showForm ? 'active' : ''} onClick={() => setShowForm(true)}>Cadastrar Erro</a>
@@ -179,7 +179,7 @@ function App() {
       <div className="container">
         {!showForm && (
           <>
-            <div className="titulo-lista">Lista de Erros NFe</div>
+            <div className="titulo-lista">Lista de Erros NF</div>
             {alerta && (
               <div className="alerta">
                 <strong>Aviso:</strong><br />
