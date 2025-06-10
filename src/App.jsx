@@ -10,14 +10,7 @@ const ERROS_PADRAO = [
     imagemSolucao: '',
     data: '07/06/2025'
   },
-  {
-    codigo: '539',
-    descricao: 'Rejeição: Duplicidade de NF-e, com diferença na Chave de Acesso',
-    solucao: 'Verifique se os dados da nota estão corretos. Se necessário, altere o número, série ou outros campos que compõem a chave.',
-    imagemErro: '',
-    imagemSolucao: '',
-    data: '07/06/2025'
-  },
+
   {
     codigo: '327',
     descricao: 'Rejeição: CFOP de operação interna e idDest diferente de 1',
